@@ -1,0 +1,29 @@
+export interface Tour {
+  destination: string;
+  subTitle: string;
+  description: string;
+  price: number;
+  priceDiscount: number;
+  rating: number;
+  ratingQuantity: number;
+  startDates: Date[];
+  duration: number[];
+  airport: string[];
+  tourType: string;
+  meals: string;
+  facilities: string[];
+  groupSize: string;
+  flyghtduration: string;
+  distance: string;
+  weather: string;
+  bestseller: boolean;
+  lastMinute: boolean;
+  difficulty: string;
+  tourPlan: string[];
+  startLocation: string[];
+  locations: string[];
+  attractions: string[];
+  guides: string[];
+  photos: string[];
+  createdAt: Date[];
+}
