@@ -30,22 +30,22 @@ const Rating = styled.div`
   align-items: center;
 `;
 
-export const TourImage = styled.img`
+export const TourImage = styled.img<{ $offer?: offerType }>`
   display: flex;
   border-radius: 4px;
-  aspect-ratio: ${(props) => (props.offer ? "" : 1)};
-  height: ${(props) => (props.offer ? "100%" : "")};
+  aspect-ratio: ${(props) => (props.$offer ? "" : 1)};
+  height: ${(props) => (props.$offer ? "100%" : "")};
   object-fit: cover;
 `;
 
-export const TourImageBlur = styled.img`
+export const TourImageBlur = styled.img<{ $offer?: offerType }>`
   display: block;
   border-radius: 4px;
   position: absolute;
   width: 100%;
   aspect-ratio: 1;
   background-color: grey;
-  opacity: ${(props) => (props.offer ? 0 : 0.6)};
+  opacity: ${(props) => (props.$offer ? 0 : 0.6)};
   &:hover {
     opacity: 0;
     cursor: pointer;
@@ -73,9 +73,16 @@ export const Slogan = styled.div`
   position: absolute;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   top: 10rem;
   font-family: Boby;
+`;
+
+export const SloganMain = styled.span`
+  font-size: 2rem;
+  margin-bottom: 1rem;
 `;
 
 export function renderLabels(tour) {
@@ -102,13 +109,24 @@ export function renderTourInfo(tour) {
   );
 }
 
+function renderSlogan(offer: boolean, tourName: string) {
+  return (
+    offer && (
+      <Slogan>
+        <SloganMain>{tourName} Adventure Calls!</SloganMain>
+        <p>Because Every Journey Tells A Story Worth Sharing.</p>
+      </Slogan>
+    )
+  );
+}
+
 function TourPreview({ tour, offer }) {
   return (
     <StyledPreview>
-      <TourImage src={tour.photos[0]} offer={offer} alt="Tour preview" />
-      <TourImageBlur offer={offer} />
+      <TourImage src={tour.photos[0]} $offer={offer} alt="Tour preview" />
+      <TourImageBlur $offer={offer} />
       <Favorite src="/heart.svg" alt="Favorite tour" />
-      {offer && <Slogan>Speciall offer you can NOT miss!</Slogan>}
+      {renderSlogan(offer, tour.destination)}
       {renderLabels(tour)}
       {renderTourInfo(tour)}
     </StyledPreview>

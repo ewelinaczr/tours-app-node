@@ -6,19 +6,19 @@ export enum offerType {
   LAST_MINUTE = "Last minute",
 }
 
-const StyledOfferLabel = styled.h5`
+const StyledOfferLabel = styled.h5<{ $type?: offerType }>`
   width: fit-content;
   color: white;
   padding: 0.1rem 1rem;
   border-radius: 0.4rem;
   background-color: ${(props) =>
-    props.type === offerType.BESTSELLER
+    props.$type === offerType.BESTSELLER
       ? `var(--color-brand-green)`
       : `var(--color-brand-purple)`};
 `;
 
 function OfferLabel({ offerType }) {
-  return <StyledOfferLabel type={offerType}>{offerType}</StyledOfferLabel>;
+  return <StyledOfferLabel $type={offerType}>{offerType}</StyledOfferLabel>;
 }
 
 export default OfferLabel;

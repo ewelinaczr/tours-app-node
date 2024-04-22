@@ -1,9 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import Button from "./Button";
 
-const NavigationButtons = [
+import Button from "./Button.tsx";
+
+export interface NavigationButton {
+  icon: string;
+  text: string;
+  height: string;
+}
+
+export const NavigationButtons: NavigationButton[] = [
   {
     icon: "/globe.svg",
     text: "Tours",
@@ -34,13 +41,14 @@ const StyledNavigationBar = styled.div`
 `;
 
 function Header() {
-  const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
+  const [selectedButtonIndex, setSelectedButtonIndex] = useState<number>(0);
 
   return (
     <StyledHeader>
       <StyledNavigationBar>
         {NavigationButtons.map((button, index) => (
           <Button
+            key={`navigation-button-${index}`}
             highlighted={index === selectedButtonIndex}
             content={button}
           />
