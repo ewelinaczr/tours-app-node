@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   getButtonHighlight,
   getIconHighlight,
-} from "../utils/getButtonHighlight";
+} from "../../utils/getButtonHighlight";
 
 const StyledInput = styled.input`
   padding-left: 3rem;

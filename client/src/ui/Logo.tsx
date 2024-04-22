@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const StyledLogo = styled.div`
   text-align: center;
@@ -46,7 +47,9 @@ function Logo() {
   return (
     <StyledLogo>
       <StyledColumns>
-        <StyledImg src={"/logo.png"} alt="Logo" />
+        <Link to="/">
+          <StyledImg src={"/logo.png"} alt="Logo" />
+        </Link>
         <StyledRows>
           <StyledAppName>Discover Asia</StyledAppName>
           <StyledAppSlogan>Where Heritage Meets Modernity</StyledAppSlogan>

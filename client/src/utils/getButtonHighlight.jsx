@@ -22,3 +22,22 @@ export function getIconHighlight() {
       brightness(100%) contrast(91%);
   `;
 }
+
+export function getButtonPrimary() {
+  return css`
+    color: white;
+    background: linear-gradient(
+      90deg,
+      var(--color-brand-purple),
+      var(--color-brand-green)
+    );
+    border: none;
+  `;
+}
+
+export function getButtonSecondary() {
+  return css`
+    border: 2px solid var(--color-brand-purple);
+    color: var(--color-brand-purple);
+  `;
+}

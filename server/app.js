@@ -23,10 +23,11 @@ const limitter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests form this ip. Try again in an hour',
 });
-app.use('/api', limitter);
+
+// app.use('/api', limitter);
 
 // Body parser, reading data from the body into req.body
-app.use(express.json({ limit: '10kb' }));
+// app.use(express.json({ limit: '10kb' }));
 
 // Data sanitization agains NoSQL query injection
 app.use(mongoSanitize());

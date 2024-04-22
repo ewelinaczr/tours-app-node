@@ -1,30 +1,29 @@
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import type { ButtonWithIcon } from "./Buttons/OutlineButton.tsx";
 
-import Button from "./Button.tsx";
+import OutlineButton from "./Buttons/OutlineButton.tsx";
 
-export interface NavigationButton {
-  icon: string;
-  text: string;
-  height: string;
-}
-
-export const NavigationButtons: NavigationButton[] = [
+export const NavigationButtons: ButtonWithIcon[] = [
   {
     icon: "/globe.svg",
     text: "Tours",
     height: "1.8rem",
+    link: "/",
   },
   {
     icon: "/profile.svg",
     text: "Profile",
     height: "1.6rem",
+    link: "/profile",
   },
   {
     icon: "/cart.svg",
     text: "Cart",
     height: "1.8rem",
+    link: "/cart",
   },
 ];
 
@@ -32,7 +31,7 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: end;
   align-items: start;
-  padding: 2rem 6rem;
+  padding: 2rem 10rem;
 `;
 
 const StyledNavigationBar = styled.div`
@@ -40,22 +39,23 @@ const StyledNavigationBar = styled.div`
   gap: 1.2rem;
 `;
 
-function Header() {
+function NavigationBar() {
   const [selectedButtonIndex, setSelectedButtonIndex] = useState<number>(0);
 
   return (
     <StyledHeader>
       <StyledNavigationBar>
         {NavigationButtons.map((button, index) => (
-          <Button
-            key={`navigation-button-${index}`}
-            highlighted={index === selectedButtonIndex}
-            content={button}
-          />
+          <NavLink to={button.link} key={`navigation-button-${index}`}>
+            <OutlineButton
+              selected={index === selectedButtonIndex}
+              content={button}
+            />
+          </NavLink>
         ))}
       </StyledNavigationBar>
     </StyledHeader>
   );
 }
 
-export default Header;
+export default NavigationBar;
