@@ -1,29 +1,49 @@
+import {
+  Facilities,
+  GroupSize,
+  DepartureAirport,
+  DepartureTime,
+  Difficulty,
+  Duration,
+  Meals,
+  TourType,
+  Destination,
+} from "./TourDetails";
+
 export interface Tour {
-  destination: string;
+  destination: Destination;
   subTitle: string;
   description: string;
   price: number;
   priceDiscount: number;
   rating: number;
   ratingQuantity: number;
-  startDates: Date[];
-  duration: number[];
-  airport: string[];
-  tourType: string;
-  meals: string;
-  facilities: string[];
-  groupSize: string;
-  flyghtduration: string;
+  startDates: DepartureTime[];
+  duration: Duration[];
+  airport: DepartureAirport[];
+  tourType: TourType;
+  meals: Meals;
+  facilities: Facilities[];
+  groupSize: GroupSize;
+  flyghtDuration: string;
   distance: string;
   weather: string;
   bestseller: boolean;
   lastMinute: boolean;
-  difficulty: string;
+  difficulty: Difficulty;
   tourPlan: string[];
-  startLocation: string[];
-  locations: string[];
+  locations: Location[];
   attractions: string[];
   guides: string[];
   photos: string[];
   createdAt: Date[];
+}
+
+export interface Location {
+  id: string;
+  description: string;
+  type: string;
+  coordinates: number[];
+  address: string;
+  day: number;
 }

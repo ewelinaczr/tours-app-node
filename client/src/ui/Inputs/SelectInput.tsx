@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import type { UseFormRegister } from "react-hook-form";
 
 const Select = styled.div`
   display: flex;
@@ -9,15 +10,23 @@ const Select = styled.div`
   cursor: pointer;
 `;
 
-function SelectInput({ label, options }: { label: string; options: string[] }) {
+function SelectInput({
+  id,
+  label,
+  options,
+  register,
+}: {
+  id: string;
+  label: string;
+  options: string[];
+  register: UseFormRegister<any>;
+}) {
   return (
     <Select>
       <label htmlFor={`select-${label}`}>{label}</label>
-      <select name="label" id={`select-${label}`}>
+      <select id={`select-${label}`} {...register(`${id}`, {})}>
         {options.map((option, index) => (
-          <option key={`option-${index}`} value={option}>
-            {option}
-          </option>
+          <option key={`option-${index}`}>{option}</option>
         ))}
       </select>
     </Select>

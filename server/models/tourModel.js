@@ -27,36 +27,23 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    startDates: [Date],
+    startDates: [Number],
     duration: [Number],
-    airport: [String],
-    tourType: String,
-    meals: String,
-    facilities: [String],
-    groupSize: String,
+    airport: [Number],
+    tourType: Number,
+    meals: Number,
+    facilities: [Number],
+    groupSize: Number,
     flyghtduration: String,
     distance: String,
     weather: String,
     bestseller: Boolean,
     lastMinute: Boolean,
     difficulty: {
-      type: String,
-      default: 'easy',
+      type: Number,
+      default: 2,
     },
     tourPlan: [String],
-    startLocation: [
-      {
-        //GeoJSON
-        type: {
-          type: String,
-          default: 'Point',
-          enum: ['Point'],
-        },
-        coordinates: [Number],
-        address: String,
-        description: String,
-      },
-    ],
     locations: [
       {
         type: {

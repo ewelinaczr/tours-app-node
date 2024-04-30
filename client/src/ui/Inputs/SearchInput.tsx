@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   getButtonHighlight,
   getIconHighlight,
-} from "../../utils/getButtonHighlight";
+} from "../../styles/getButtonStyle.ts";
 
 const StyledInput = styled.input`
   padding-left: 3rem;
@@ -34,12 +34,15 @@ const Search = styled.div`
   position: relative;
 `;
 
-function SearchInput({ highlighted }) {
+function SearchInput({ highlighted, openMenu }) {
   return (
     <Search>
       <StyledInput />
       <SearchIcon src={"/search.svg"} alt="Search" />
-      <FilterButton $highlighted={highlighted}>
+      <FilterButton
+        $highlighted={highlighted}
+        onClick={() => openMenu((prev) => !prev)}
+      >
         <FilterIcon
           $highlighted={highlighted}
           src={"/filters.svg"}

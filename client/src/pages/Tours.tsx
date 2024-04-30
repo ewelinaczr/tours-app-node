@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { getTours } from "../services/apiTours";
+import { useState } from "react";
+import { getTours } from "../services/apiTours.ts";
+import { useQuery } from "@tanstack/react-query";
 import type { Tour } from "../data/TourInterfase.tsx";
 
 import Logo from "../ui/Logo.tsx";
@@ -30,52 +31,43 @@ const TourContainer = styled.div`
   display: flex;
 `;
 
-const FilterPanel = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-`;
-
 function Tours() {
-  const [tours, setTours] = useState<Tour[]>([]);
   const [filterMenuSize, setFilterMenuSize] = useState<number[]>([0, 0]);
+  const [filterMenuOpened, setFilterMenuOpened] = useState<boolean>(false);
+  const { isLoading, data, error } = useQuery({
+    queryKey: ["tours"],
+    queryFn: getTours,
+  });
 
-  useEffect(function () {
-    getTours().then(({ data }) => {
-      const offer = data.find((tour: Tour) => tour.lastMinute);
-      const offerIndex = offer ? data.indexOf(offer) : 0;
-      data.splice(offerIndex, 1);
-      const newTours = [offer, ...data];
-      setTours(newTours);
-    });
-  }, []);
-
-  function renderFilterMenu() {
+  useLayoutEffect(() => {
     const container = document.getElementsByClassName("tour-0")[0];
     const menuWidthPx = container && container.clientWidth;
     const menuHeightPx = container && container.clientHeight;
+    setFilterMenuSize([menuWidthPx, menuHeightPx]);
+  }, [data]);
 
-    (menuWidthPx !== filterMenuSize[0] || menuHeightPx !== filterMenuSize[1]) &&
-      setFilterMenuSize([menuWidthPx, menuHeightPx]);
+  if (isLoading || !data) {
+    return <h1>isLoading</h1>;
+  }
 
-    return (
-      <FilterPanel>
-        <FilterMenu tours={tours} size={filterMenuSize} />
-      </FilterPanel>
-    );
+  function renderFilterMenu(tours: Tour[]) {
+    return <FilterMenu size={filterMenuSize} />;
   }
 
   return (
     <Main>
       <Logo />
-      <SearchInput highlighted={true}></SearchInput>
+      <SearchInput
+        highlighted={filterMenuOpened}
+        openMenu={setFilterMenuOpened}
+      ></SearchInput>
       <ToursGrid>
-        {tours.map((tour, index) => (
+        {data.map((tour, index) => (
           <TourContainer className={`tour-${index}`} key={`tour-${index}`}>
             <TourPreview tour={tour} offer={index === 0}></TourPreview>
           </TourContainer>
         ))}
-        {renderFilterMenu()}
+        {filterMenuOpened && renderFilterMenu(data)}
       </ToursGrid>
     </Main>
   );

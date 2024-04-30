@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   getButtonHighlight,
   getIconHighlight,
-} from "../../utils/getButtonHighlight";
+} from "../../styles/getButtonStyle.ts";
 
 export interface ButtonWithIcon {
   icon: string;

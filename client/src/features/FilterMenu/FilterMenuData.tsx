@@ -1,49 +1,70 @@
+import {
+  DepartureAirport,
+  DepartureTime,
+  Destination,
+  Duration,
+  Facilities,
+  Meals,
+  TourType,
+} from "../../data/TourDetails.tsx";
 import { ButtonType } from "../../ui/Buttons/FullButton.tsx";
 
 export interface CountInput {
   label: string;
-  default: number;
+  boundries: number[];
 }
 
 export interface SelectInput {
+  id: string;
   label: string;
   options: string[];
 }
 
 export interface FilerButton {
   label: string;
-  type: ButtonType;
+  type: "reset" | "submit" | "button";
+  style: ButtonType;
 }
 
 export const tourGeneralInfo: CountInput[] = [
   {
     label: "Guests",
-    default: 2,
+    boundries: [1, 10],
   },
-  { label: "Duration", default: 10 },
+  { label: "Duration", boundries: [7, 30] },
 ];
 
 export const tourDetailedInfo: SelectInput[] = [
   {
-    label: "Tour start date:",
-    options: ["01.06.2024", "01.07.2024", "01.08.2024"],
+    id: "startDates",
+    label: "Tour start date",
+    options: Object.values(DepartureTime),
   },
-  { label: "Departure from:", options: ["Warsaw", "Cracow"] },
   {
-    label: "Meals:",
-    options: ["All Inclusive", "Breakfast, half-board", "Breakfast"],
+    id: "airport",
+    label: "Departure from",
+    options: Object.values(DepartureAirport),
   },
-  { label: "Tour type:", options: ["Round trip", "Leisure"] },
-];
-
-export const tourFacilities: string[] = [
-  "By the beach",
-  "City tour",
-  "Local heritage",
-  "Mountains",
+  {
+    id: "meals",
+    label: "Meals",
+    options: Object.values(Meals),
+  },
+  { id: "tourType", label: "Tour type", options: Object.values(TourType) },
 ];
 
 export const filterButtons: FilerButton[] = [
-  { label: "Filter", type: ButtonType.PRIMARY },
-  { label: "Clear", type: ButtonType.SECONDARY },
+  { label: "Filter", type: "submit", style: ButtonType.PRIMARY },
+  { label: "Clear", type: "reset", style: ButtonType.SECONDARY },
 ];
+
+export interface TourFilters {
+  destination: Destination[];
+  startDates: DepartureTime;
+  duration: Duration;
+  turists: number;
+  airport: DepartureAirport;
+  tourType: TourType;
+  meals: Meals;
+  facilities: Facilities[];
+}

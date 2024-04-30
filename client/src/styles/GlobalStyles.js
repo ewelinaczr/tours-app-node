@@ -84,6 +84,21 @@ select {
   justify-content: center;
 }
 
+input.checked {
+  position: relative;
+}
+
+input.checked::before{
+  content:"";
+  position: absolute;
+  right: 0.4rem;
+  top: 0.4rem;;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 1rem;
+  background-color: var(--color-brand-purple);
+}
+
 button {
   cursor: pointer;
 }

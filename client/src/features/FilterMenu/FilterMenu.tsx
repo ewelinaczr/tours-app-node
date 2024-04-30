@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Destination, Facilities } from "../../data/TourDetails.tsx";
 import {
   tourGeneralInfo,
   tourDetailedInfo,
-  tourFacilities,
   filterButtons,
 } from "./FilterMenuData.tsx";
-import type { Tour } from "../../data/TourInterfase.tsx";
 
 import CountInput from "../../ui/Inputs/CountInput.tsx";
 import SelectInput from "../../ui/Inputs/SelectInput.tsx";
@@ -23,7 +24,10 @@ const FilterInputs = styled.div`
   align-items: space-between;
 `;
 
-const StyledFilterMenu = styled.div<{ $size: number[] }>`
+const StyledFilterMenu = styled.form<{ $size: number[] }>`
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -31,30 +35,43 @@ const StyledFilterMenu = styled.div<{ $size: number[] }>`
   padding-bottom: 4.6rem;
   background-color: white;
   border-radius: 4px;
+  font-size: 1.4rem;
   width: ${(props) => props.$size[0]}px;
   min-width: ${(props) => props.$size[0]}px;
   height: ${(props) => props.$size[1]}px;
   min-height: ${(props) => props.$size[1]}px;
 `;
 
-function FilterMenu({ tours, size }: { tours: Tour[]; size: number[] }) {
-  function getDestinations(): string[] {
-    const uniqueDestinations = new Set<string>();
-    tours.map((tour) => uniqueDestinations.add(tour.destination));
-    return [...uniqueDestinations.values()];
-  }
+function FilterMenu({ size }: { size: number[] }) {
+  const [turists, setTourists] = useState<number>(1);
+  const [duration, setDuration] = useState<number>(7);
+  const [destinations, setDestinations] = useState<number[]>([]);
+  const [facilities, setFacilities] = useState<number[]>([]);
+  const { handleSubmit, register } = useForm<String>();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const onReset = () => {
+    setTourists(1);
+    setDuration(7);
+    setDestinations([]);
+    setFacilities([]);
+  };
 
   function renderDestinations() {
     return (
       <FilterInputs>
-        {getDestinations()?.length &&
-          getDestinations().map((destination, index) => (
-            <Checkbox
-              selected={true}
-              key={`destination-${index}`}
-              text={destination}
-            />
-          ))}
+        {Object.values(Destination).map((country, index) => (
+          <Checkbox
+            key={`destination-${index}`}
+            index={index}
+            text={country}
+            selected={destinations}
+            setSelected={setDestinations}
+          />
+        ))}
       </FilterInputs>
     );
   }
@@ -66,6 +83,9 @@ function FilterMenu({ tours, size }: { tours: Tour[]; size: number[] }) {
           <CountInput
             key={`tour-general-info-${index}`}
             label={tourDetails.label}
+            boundries={tourDetails.boundries}
+            itemCount={index === 0 ? turists : duration}
+            setItemCount={index === 0 ? setTourists : setDuration}
           />
         ))}
       </FilterInputs>
@@ -78,8 +98,10 @@ function FilterMenu({ tours, size }: { tours: Tour[]; size: number[] }) {
         {tourDetailedInfo.map((tourDetails, index) => (
           <SelectInput
             key={`tour-details-${index}`}
+            id={tourDetails.id}
             label={tourDetails.label}
             options={tourDetails.options}
+            register={register}
           />
         ))}
       </FilterInputs>
@@ -89,11 +111,13 @@ function FilterMenu({ tours, size }: { tours: Tour[]; size: number[] }) {
   function renderFacilities() {
     return (
       <FilterInputs>
-        {tourFacilities.map((destination, index) => (
+        {Object.values(Facilities).map((facility, index) => (
           <Checkbox
             key={`facilities-${index}`}
-            selected={true}
-            text={destination}
+            index={index}
+            text={facility}
+            selected={facilities}
+            setSelected={setFacilities}
           />
         ))}
       </FilterInputs>
@@ -107,7 +131,9 @@ function FilterMenu({ tours, size }: { tours: Tour[]; size: number[] }) {
           <FullButton
             key={`filter-button-${index}`}
             label={button.label}
+            style={button.style}
             type={button.type}
+            onReset={() => onReset()}
           />
         ))}
       </FilterInputs>
@@ -115,7 +141,7 @@ function FilterMenu({ tours, size }: { tours: Tour[]; size: number[] }) {
   }
 
   return (
-    <StyledFilterMenu $size={size}>
+    <StyledFilterMenu $size={size} onSubmit={handleSubmit(onSubmit)}>
       <h4>Destination</h4>
       {renderDestinations()}
       <h4>General Info</h4>

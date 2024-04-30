@@ -1,4 +1,5 @@
 import React from "react";
+import type { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -7,7 +8,11 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const CheckboxContainer = styled.div`
+const CheckboxContainer = styled.input`
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+  /* creating a custom design */
   width: 2rem;
   height: 2rem;
   border-color: var(--color-grey-1);
@@ -21,20 +26,38 @@ const CheckboxContainer = styled.div`
   cursor: pointer;
 `;
 
-const Selected = styled.div`
-  width: 1rem;
-  height: 1rem;
-  border-radius: 1rem;
-  background-color: var(--color-brand-purple);
-`;
+function Checkbox({
+  index,
+  text,
+  selected,
+  setSelected,
+}: {
+  index: number;
+  text: string;
+  selected: number[];
+  setSelected: Dispatch<SetStateAction<number[]>>;
+}) {
+  function handleClick(index: number): void {
+    const newSelected = [...selected];
+    if (selected.includes(index)) {
+      const indexToRemove = newSelected.indexOf(index);
+      newSelected.splice(indexToRemove);
+      return setSelected(newSelected);
+    }
+    newSelected.push(index);
+    setSelected(newSelected);
+  }
 
-function Checkbox({ selected, text }: { selected: boolean; text: string }) {
   return (
     <Container>
-      <CheckboxContainer id={`check-${text}`}>
-        {selected && <Selected />}
-      </CheckboxContainer>
-      <label htmlFor={`check-${text}`}> {text}</label>
+      <CheckboxContainer
+        id={`check-${text}`}
+        type="checkbox"
+        checked={selected.includes(index)}
+        className={selected.includes(index) ? "checked" : ""}
+        onChange={() => handleClick(index)}
+      ></CheckboxContainer>
+      <label htmlFor={`check-${text}`}>{text}</label>
     </Container>
   );
 }

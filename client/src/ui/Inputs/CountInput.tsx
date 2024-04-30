@@ -1,4 +1,5 @@
 import React from "react";
+import type { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
 const StyledCountInput = styled.div`
@@ -26,14 +27,42 @@ const StyledInput = styled.input`
   width: 5rem;
 `;
 
-function CountInput({ label }: { label: string }) {
+function CountInput({
+  label,
+  boundries,
+  itemCount,
+  setItemCount,
+}: {
+  label: string;
+  boundries: number[];
+  itemCount: number;
+  setItemCount: Dispatch<SetStateAction<number>>;
+}) {
   return (
     <Count>
       <label htmlFor={`count-${label}`}>{label}</label>
       <StyledCountInput>
-        <CountInputIcon src={"/add.svg"} alt="Add item" />
-        <StyledInput id={`select-${label}`} value={5}></StyledInput>
-        <CountInputIcon src={"/delete.svg"} alt="Delete item" />
+        <CountInputIcon
+          src={"/add.svg"}
+          alt="Add item"
+          onClick={() =>
+            itemCount < boundries[1] && setItemCount(itemCount + 1)
+          }
+        />
+        <StyledInput
+          id={`count-${label}`}
+          type="number"
+          name={`${label}`}
+          readOnly
+          value={itemCount}
+        ></StyledInput>
+        <CountInputIcon
+          src={"/delete.svg"}
+          alt="Delete item"
+          onClick={() =>
+            itemCount > boundries[0] && setItemCount(itemCount - 1)
+          }
+        />
       </StyledCountInput>
     </Count>
   );
