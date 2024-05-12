@@ -21,6 +21,14 @@ export enum DepartureAirport {
   CRACOW = "Cracow",
 }
 
+// export const DepartureAirport = {
+//   WARSAW: "Warsaw",
+//   CRACOW: "Cracow",
+// } as const;
+
+export type DepartureAirportType =
+  (typeof DepartureAirport)[keyof typeof DepartureAirport];
+
 export enum TourType {
   ROUND_TRIP = "Round trip",
   LEISURE = "Leisure",
@@ -40,7 +48,7 @@ export enum Difficulty {
 
 export enum Duration {
   SHORT = "10 days",
-  MEDIUM = "14 days",
+  MEDIUM = "15 days",
   LONG = "20 days",
 }
 

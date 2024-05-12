@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Destination, Facilities } from "../../data/TourDetails.tsx";
+import { Destination, Duration, Facilities } from "../../data/TourDetails.tsx";
 import {
   tourGeneralInfo,
   tourDetailedInfo,
   filterButtons,
+  TourFilters,
 } from "./FilterMenuData.tsx";
 
 import CountInput from "../../ui/Inputs/CountInput.tsx";
@@ -42,22 +44,34 @@ const StyledFilterMenu = styled.form<{ $size: number[] }>`
   min-height: ${(props) => props.$size[1]}px;
 `;
 
-function FilterMenu({ size }: { size: number[] }) {
-  const [turists, setTourists] = useState<number>(1);
-  const [duration, setDuration] = useState<number>(7);
-  const [destinations, setDestinations] = useState<number[]>([]);
-  const [facilities, setFacilities] = useState<number[]>([]);
+export const initialFilters: TourFilters = {
+  turists: 1,
+  destination: [],
+  facilities: [],
+  startDates: undefined,
+  airport: undefined,
+  tourType: undefined,
+  meals: undefined,
+  duration: undefined,
+};
+
+function FilterMenu({
+  size,
+  setFilters,
+}: {
+  size: number[];
+  setFilters: Dispatch<SetStateAction<TourFilters>>;
+}) {
   const { handleSubmit, register } = useForm<String>();
+  const [filterConfig, setFilterConfig] = useState<TourFilters>(initialFilters);
 
   const onSubmit = (data) => {
-    console.log(data);
+    const filters: TourFilters = { ...filterConfig, ...data };
+    setFilters(filters);
   };
 
   const onReset = () => {
-    setTourists(1);
-    setDuration(7);
-    setDestinations([]);
-    setFacilities([]);
+    setFilterConfig(initialFilters);
   };
 
   function renderDestinations() {
@@ -66,10 +80,10 @@ function FilterMenu({ size }: { size: number[] }) {
         {Object.values(Destination).map((country, index) => (
           <Checkbox
             key={`destination-${index}`}
-            index={index}
-            text={country}
-            selected={destinations}
-            setSelected={setDestinations}
+            label={country}
+            filter={"destination"}
+            filterConfig={filterConfig}
+            setFilterConfig={setFilterConfig}
           />
         ))}
       </FilterInputs>
@@ -84,8 +98,11 @@ function FilterMenu({ size }: { size: number[] }) {
             key={`tour-general-info-${index}`}
             label={tourDetails.label}
             boundries={tourDetails.boundries}
-            itemCount={index === 0 ? turists : duration}
-            setItemCount={index === 0 ? setTourists : setDuration}
+            step={tourDetails.step}
+            filter={index === 0 ? "turists" : "duration"}
+            translation={index === 0 ? undefined : Duration}
+            filterConfig={filterConfig}
+            setFilterConfig={setFilterConfig}
           />
         ))}
       </FilterInputs>
@@ -114,10 +131,10 @@ function FilterMenu({ size }: { size: number[] }) {
         {Object.values(Facilities).map((facility, index) => (
           <Checkbox
             key={`facilities-${index}`}
-            index={index}
-            text={facility}
-            selected={facilities}
-            setSelected={setFacilities}
+            label={facility}
+            filter={"facilities"}
+            filterConfig={filterConfig}
+            setFilterConfig={setFilterConfig}
           />
         ))}
       </FilterInputs>
@@ -133,7 +150,7 @@ function FilterMenu({ size }: { size: number[] }) {
             label={button.label}
             style={button.style}
             type={button.type}
-            onReset={() => onReset()}
+            onReset={() => button.type === "reset" && onReset()}
           />
         ))}
       </FilterInputs>

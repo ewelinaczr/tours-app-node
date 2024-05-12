@@ -3,7 +3,6 @@ import { css } from "styled-components";
 export function getButtonHighlight() {
   return css`
     color: var(--color-brand-purple);
-    font-weight: 700;
     border-width: 2px;
     border-color: #0000;
     background: linear-gradient(white, white) padding-box,
@@ -26,6 +25,7 @@ export function getIconHighlight() {
 export function getButtonPrimary() {
   return css`
     color: white;
+    padding: 0 2rem;
     background: linear-gradient(
       90deg,
       var(--color-brand-purple),

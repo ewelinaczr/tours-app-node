@@ -1,6 +1,7 @@
 import React from "react";
-import type { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
+import type { Dispatch, SetStateAction } from "react";
+import type { TourFilters } from "../../features/FilterMenu/FilterMenuData";
 
 const StyledCountInput = styled.div`
   display: flex;
@@ -30,13 +31,19 @@ const StyledInput = styled.input`
 function CountInput({
   label,
   boundries,
-  itemCount,
-  setItemCount,
+  step,
+  filter,
+  translation,
+  filterConfig,
+  setFilterConfig,
 }: {
   label: string;
   boundries: number[];
-  itemCount: number;
-  setItemCount: Dispatch<SetStateAction<number>>;
+  step: number;
+  filter: string;
+  translation?: any;
+  filterConfig: TourFilters;
+  setFilterConfig: Dispatch<SetStateAction<TourFilters>>;
 }) {
   return (
     <Count>
@@ -45,23 +52,49 @@ function CountInput({
         <CountInputIcon
           src={"/add.svg"}
           alt="Add item"
-          onClick={() =>
-            itemCount < boundries[1] && setItemCount(itemCount + 1)
-          }
+          onClick={() => {
+            if (!translation && filterConfig[filter] < boundries[1]) {
+              const newConfig = { ...filterConfig };
+              newConfig[filter] = filterConfig[filter] + step;
+              return setFilterConfig(newConfig);
+            }
+            const current = Object.values(translation).find(
+              (el: typeof translation) => el.includes(filterConfig[filter])
+            );
+            const currentIndex = Object.values(translation).indexOf(current);
+            if (currentIndex < boundries[1]) {
+              const newConfig = { ...filterConfig };
+              newConfig[filter] = Object.values(translation)[currentIndex + 1];
+              return setFilterConfig(newConfig);
+            }
+          }}
         />
         <StyledInput
           id={`count-${label}`}
-          type="number"
+          type="string"
           name={`${label}`}
           readOnly
-          value={itemCount}
+          value={String(filterConfig[filter]).replace(/\D/g, "")}
         ></StyledInput>
         <CountInputIcon
           src={"/delete.svg"}
           alt="Delete item"
-          onClick={() =>
-            itemCount > boundries[0] && setItemCount(itemCount - 1)
-          }
+          onClick={() => {
+            if (filterConfig[filter] > boundries[0]) {
+              const newConfig = { ...filterConfig };
+              newConfig[filter] = filterConfig[filter] - step;
+              return setFilterConfig(newConfig);
+            }
+            const current = Object.values(translation).find(
+              (el: typeof translation) => el.includes(filterConfig[filter])
+            );
+            const currentIndex = Object.values(translation).indexOf(current);
+            if (currentIndex > boundries[0]) {
+              const newConfig = { ...filterConfig };
+              newConfig[filter] = Object.values(translation)[currentIndex - 1];
+              return setFilterConfig(newConfig);
+            }
+          }}
         />
       </StyledCountInput>
     </Count>

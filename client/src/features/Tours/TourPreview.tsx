@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import OfferLabel, { offerType } from "./OfferLabel.tsx";
+import { Link } from "react-router-dom";
 
 export const StyledPreview = styled.div`
   width: 100%;
@@ -38,14 +39,15 @@ export const TourImage = styled.img<{ $offer?: offerType }>`
   object-fit: cover;
 `;
 
-export const TourImageBlur = styled.img<{ $offer?: offerType }>`
+export const TourImageBlur = styled.img`
   display: block;
   border-radius: 4px;
   position: absolute;
+  top: 0;
   width: 100%;
   aspect-ratio: 1;
   background-color: grey;
-  opacity: ${(props) => (props.$offer ? 0 : 0.6)};
+  opacity: 0.6;
   &:hover {
     opacity: 0;
     cursor: pointer;
@@ -123,8 +125,14 @@ function renderSlogan(offer: boolean, tourName: string) {
 function TourPreview({ tour, offer }) {
   return (
     <StyledPreview>
-      <TourImage src={tour.photos[0]} $offer={offer} alt="Tour preview" />
-      <TourImageBlur $offer={offer} />
+      <Link to={`${tour.id}/general-info`} style={{ display: "contents" }}>
+        <TourImage
+          src={tour.photos[0]}
+          $offer={offer}
+          alt="Tour preview"
+        ></TourImage>
+        {!offer && <TourImageBlur />}
+      </Link>
       <Favorite src="/heart.svg" alt="Favorite tour" />
       {renderSlogan(offer, tour.destination)}
       {renderLabels(tour)}

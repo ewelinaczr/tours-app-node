@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import styled from "styled-components";
 import {
   getButtonHighlight,
@@ -14,7 +14,8 @@ export interface ButtonWithIcon {
 
 const StyledButton = styled.button<{ $selected: boolean }>`
   padding: 0 1.8rem 0 1.6rem;
-  gap: 0.6rem;
+  gap: 0.8rem;
+
   ${(props) => props.$selected && getButtonHighlight()}
 `;
 
@@ -25,14 +26,18 @@ const StyledIcon = styled.img<{ $selected: boolean; $height: string }>`
 `;
 
 function OutlineButton({
+  index,
   content,
   selected,
+  setSelected,
 }: {
+  index: number;
   content: ButtonWithIcon;
   selected: boolean;
+  setSelected: Dispatch<React.SetStateAction<number>>;
 }) {
   return (
-    <StyledButton $selected={selected}>
+    <StyledButton $selected={selected} onClick={() => setSelected(index)}>
       <StyledIcon
         $selected={selected}
         $height={content.height}

@@ -14,7 +14,6 @@ class APIFeatures {
 
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-
     this.mongooseQuery = this.mongooseQuery.find(JSON.parse(queryStr));
     return this;
   }
@@ -22,7 +21,11 @@ class APIFeatures {
   sort() {
     if (this.urlQueryString.sort) {
       // Url params: ...tours?sort=price
-      this.mongooseQuery = this.mongooseQuery.sort(this.urlQueryString.sort);
+
+      const queryStr = this.urlQueryString.sort.includes('desc')
+        ? [[this.urlQueryString.sort.replace('-desc', ''), -1]]
+        : [[this.urlQueryString.sort, 1]];
+      this.mongooseQuery = this.mongooseQuery.sort(queryStr);
     }
     return this;
   }

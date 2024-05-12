@@ -1,0 +1,82 @@
+export function getHotel() {
+  return {
+    name: "InterContinental Hotel",
+    location: "🗺️ 5 Tu Hoa Street, Tay Ho District, Tay Ho, Asia",
+    description:
+      "The luxurious InterContinental 🛏️ sits on the peaceful waters of Hanoi's Westlake, next to the Golden Lotus Pagoda 🛕. Spacious air-conditioned rooms feature contemporary Vietnamese décor and flat-screen TVs. Free Wi-Fi is available in public areas .InterContinental Hanoi Westlake is about 22 km from Nibali International Airport ✈️. Attractions like Thang Long Water Puppet Theatre and Vietnam Fine Arts Museum are within 4.7 km from the hotel. Fitted with wooden floors, the stylish rooms enjoy a minibar 🍹 and private balconies overlooking the hotel's pool ⛱️ , Westlake or Hanoi City. The large en suite bathrooms come with walk-in rain showers and bathtubs. The hotelss Health Club features a well-equipped fitness centre, as well as yoga and Pilates classes 🤾‍♂️ . Guests may enjoy relaxing massage services, or arrange day trips at the tour desk. The 3 on-site restaurants serve a daily breakfast, Vietnamese cuisine and Italian dishes 🦐. Drinks and wine can be enjoyed at Sunset Bar or Diplomat Lounge. Freshly homemade bread, cookies and pastries, as well as abundant selection of coffee and tea can be found at Le Gourmet.",
+    advantages: [
+      "❤️ Couples particularly like the location close to the Hanoi city center",
+      "🔥 Young gueast enjoy local bars and clubs.",
+    ],
+    rooms: [
+      {
+        name: "Twin room",
+        price: "included in price",
+        default: "default room",
+        guests: 2,
+        description:
+          "Includes a private bathroom with a walk-in shower, a bidet and a hairdryer. The air-conditioned twin room provides a flat-screen TV with cable channels, a private entrance, soundproof walls and a minibar. The unit offers 2 beds. Room size 22 m².",
+        features: [
+          "Wifi",
+          "Balcony",
+          "Tea/Coffee maker",
+          "Air conditioning",
+          "Minibar",
+          "Tv",
+          "Safe",
+        ],
+      },
+      {
+        name: "Classic King Room with Club Access and City View",
+        price: "+ $50/room",
+        guests: 2,
+        description:
+          "Includes a private bathroom with a walk-in shower, a bidet and a hairdryer. The air-conditioned twin room provides a flat-screen TV with cable channels, a private entrance, soundproof walls and a minibar. The unit offers 2 beds. Room size 35 m².",
+        features: [
+          "Wifi",
+          "Balcony",
+          "Tea/Coffee maker",
+          "Air conditioning",
+          "Minibar",
+          "Tv",
+          "Safe",
+          "Bathtub",
+        ],
+      },
+      {
+        name: "Lagre Suite with Balcony",
+        price: "+ $70/room",
+        guests: 3,
+        description:
+          "The spacious family room provides air conditioning, a private entrance, a balcony with city views as well as a private bathroom featuring a walk-in shower. The unit offers 2 beds",
+        features: [
+          "Wifi",
+          "City view",
+          "Tea/Coffee maker",
+          "Air conditioning",
+          "Minibar",
+          "Tv",
+          "Safe",
+          "Balcony",
+        ],
+      },
+      {
+        name: "Suite with City View",
+        price: "+ $200/room",
+        guests: 4,
+        description:
+          "The fireplace is the standout feature of this suite. Boasting a private entrance, this air-conditioned suite features 1 bedroom and 1 bathroom with a walk-in shower and a bidet. This suite has soundproof walls, flat-screen TV with streaming services, city views, as well as wine/champagne for guests. The unit has 1 bed.",
+        features: [
+          "Wifi",
+          "City view",
+          "Tea/Coffee maker",
+          "Air conditioning",
+          "Minibar",
+          "Tv",
+          "Safe",
+          "Soundproofing",
+        ],
+      },
+    ],
+  };
+}

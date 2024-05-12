@@ -68,14 +68,13 @@ exports.getAll = (Model) =>
     if (req.params.tourId) {
       filter = { tour: req.params.tourId };
     }
-
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
       .sort()
       .limitFields()
       .paginate();
     const items = await features.mongooseQuery;
-
+    console.log(items);
     res.status(200).json({
       status: 'success',
       results: items.length,

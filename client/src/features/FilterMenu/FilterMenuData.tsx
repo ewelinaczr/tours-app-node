@@ -12,6 +12,7 @@ import { ButtonType } from "../../ui/Buttons/FullButton.tsx";
 export interface CountInput {
   label: string;
   boundries: number[];
+  step: number;
 }
 
 export interface SelectInput {
@@ -30,27 +31,34 @@ export const tourGeneralInfo: CountInput[] = [
   {
     label: "Guests",
     boundries: [1, 10],
+    step: 1,
   },
-  { label: "Duration", boundries: [7, 30] },
+  { label: "Duration", boundries: [0, 2], step: 5 },
 ];
+
+const defalutSelect = "";
 
 export const tourDetailedInfo: SelectInput[] = [
   {
     id: "startDates",
     label: "Tour start date",
-    options: Object.values(DepartureTime),
+    options: [defalutSelect, ...Object.values(DepartureTime)],
   },
   {
     id: "airport",
     label: "Departure from",
-    options: Object.values(DepartureAirport),
+    options: [defalutSelect, ...Object.values(DepartureAirport)],
   },
   {
     id: "meals",
     label: "Meals",
-    options: Object.values(Meals),
+    options: [defalutSelect, ...Object.values(Meals)],
   },
-  { id: "tourType", label: "Tour type", options: Object.values(TourType) },
+  {
+    id: "tourType",
+    label: "Tour type",
+    options: [defalutSelect, ...Object.values(TourType)],
+  },
 ];
 
 export const filterButtons: FilerButton[] = [
@@ -59,12 +67,12 @@ export const filterButtons: FilerButton[] = [
 ];
 
 export interface TourFilters {
-  destination: Destination[];
-  startDates: DepartureTime;
-  duration: Duration;
+  destination?: Destination[];
+  startDates?: DepartureTime;
+  duration?: Duration;
   turists: number;
-  airport: DepartureAirport;
-  tourType: TourType;
-  meals: Meals;
-  facilities: Facilities[];
+  airport?: DepartureAirport;
+  tourType?: TourType;
+  meals?: Meals;
+  facilities?: Facilities[];
 }

@@ -15,24 +15,31 @@ const StyledButton = styled.button<{ $style: string }>`
   ${(props) => props.$style === ButtonType.SECONDARY && getButtonSecondary()}
 `;
 
+const Icon = styled.img`
+  padding-left: 1rem;
+`;
+
 function FullButton({
   label,
+  iconSrc,
   type,
   style,
   onReset,
 }: {
   label: string;
+  iconSrc?: string;
   type: "submit" | "reset" | "button";
-  style: string;
-  onReset: any;
+  style: ButtonType;
+  onReset?: () => void | undefined;
 }) {
   return (
     <StyledButton
       $style={style}
       type={type}
-      onClick={(type = "reset" ? onReset : undefined)}
+      onClick={type === "reset" ? onReset : undefined}
     >
       {label}
+      {iconSrc ? <Icon src={`/${iconSrc}`} alt="Complete button icon" /> : null}
     </StyledButton>
   );
 }

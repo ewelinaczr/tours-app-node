@@ -1,6 +1,7 @@
 import React from "react";
-import type { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
+import type { Dispatch, SetStateAction } from "react";
+import type { TourFilters } from "../../features/FilterMenu/FilterMenuData";
 
 const Container = styled.div`
   display: flex;
@@ -27,37 +28,40 @@ const CheckboxContainer = styled.input`
 `;
 
 function Checkbox({
-  index,
-  text,
-  selected,
-  setSelected,
+  label,
+  filter,
+  filterConfig,
+  setFilterConfig,
 }: {
-  index: number;
-  text: string;
-  selected: number[];
-  setSelected: Dispatch<SetStateAction<number[]>>;
+  label: string;
+  filter: string;
+  filterConfig: TourFilters;
+  setFilterConfig: Dispatch<SetStateAction<TourFilters>>;
 }) {
-  function handleClick(index: number): void {
-    const newSelected = [...selected];
-    if (selected.includes(index)) {
-      const indexToRemove = newSelected.indexOf(index);
+  function handleClick(label: string): void {
+    const newSelected = [...filterConfig[filter]];
+    if (filterConfig[filter].includes(label)) {
+      const indexToRemove = newSelected.indexOf(label);
       newSelected.splice(indexToRemove);
-      return setSelected(newSelected);
+    } else {
+      newSelected.push(label);
     }
-    newSelected.push(index);
-    setSelected(newSelected);
+
+    const newConfig = { ...filterConfig };
+    newConfig[filter] = newSelected;
+    return setFilterConfig(newConfig);
   }
 
   return (
     <Container>
       <CheckboxContainer
-        id={`check-${text}`}
+        id={`check-${label}`}
         type="checkbox"
-        checked={selected.includes(index)}
-        className={selected.includes(index) ? "checked" : ""}
-        onChange={() => handleClick(index)}
+        checked={filterConfig[filter].includes(label)}
+        className={filterConfig[filter].includes(label) ? "checked" : ""}
+        onChange={() => handleClick(label)}
       ></CheckboxContainer>
-      <label htmlFor={`check-${text}`}>{text}</label>
+      <label htmlFor={`check-${label}`}>{label}</label>
     </Container>
   );
 }

@@ -7,10 +7,12 @@ import {
 
 const StyledInput = styled.input`
   padding-left: 3rem;
+  border-color: var(--color-grey-1);
 `;
 
 const FilterButton = styled.button<{ $highlighted: boolean }>`
   width: 3.6rem;
+  border-color: var(--color-grey-1);
   ${(props) => props.$highlighted && getButtonHighlight()}
 `;
 

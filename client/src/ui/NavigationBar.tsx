@@ -48,7 +48,9 @@ function NavigationBar() {
         {NavigationButtons.map((button, index) => (
           <NavLink to={button.link} key={`navigation-button-${index}`}>
             <OutlineButton
+              index={index}
               selected={index === selectedButtonIndex}
+              setSelected={setSelectedButtonIndex}
               content={button}
             />
           </NavLink>

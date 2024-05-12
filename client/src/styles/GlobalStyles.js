@@ -73,9 +73,9 @@ select {
   color: inherit;
   height: 3.6rem;
   color: var(--color-grey-3);
-  border-color: var(--color-grey-1);
+  border-color: transparent;
   font-weight: 500;
-  border-width: 1px;
+  border-width: 2px;
   border-radius: 4px;
   border-style: solid;
   background-color: transparent;
@@ -170,20 +170,20 @@ h3{
 }
 
 h4{
-  font-size: 1.8;
+  font-size: 1.8rem;
   font-weight: 700;
   color: var(--color-grey-4)
 }
 
 h5{
-  font-size: 1.6;
-  font-weight: 500;
+  font-size: 1.6rem;
+  font-weight: 600;
   color: var(--color-grey-3)
 }
 
 p{
 font-size: 1.4rem;
-color: var(--color-grey2);
+color: var(--color-grey-2);
 font-weight: 500;
 }
 
