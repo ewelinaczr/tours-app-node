@@ -39,7 +39,7 @@ module.exports = (err, req, res, next) => {
       const message = `Session expired. Please log in again.`;
       error = new AppError(message, 401);
     }
-    if (error.isOperational) {
+    if (error.isOperationalError) {
       res.status(error.statusCode).json({
         status: error.status,
         message: error.message,

@@ -20,6 +20,12 @@ export const NavigationButtons: ButtonWithIcon[] = [
     link: "/profile",
   },
   {
+    icon: "/profile.svg",
+    text: "Login",
+    height: "1.6rem",
+    link: "/login",
+  },
+  {
     icon: "/cart.svg",
     text: "Cart",
     height: "1.8rem",

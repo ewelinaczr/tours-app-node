@@ -11,6 +11,7 @@ export enum ButtonType {
 }
 
 const StyledButton = styled.button<{ $style: string }>`
+  width: fit-content;
   ${(props) => props.$style === ButtonType.PRIMARY && getButtonPrimary()}
   ${(props) => props.$style === ButtonType.SECONDARY && getButtonSecondary()}
 `;

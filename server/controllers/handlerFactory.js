@@ -74,7 +74,6 @@ exports.getAll = (Model) =>
       .limitFields()
       .paginate();
     const items = await features.mongooseQuery;
-    console.log(items);
     res.status(200).json({
       status: 'success',
       results: items.length,

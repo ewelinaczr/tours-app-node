@@ -11,15 +11,17 @@ import { store } from "./store/store.ts";
 import "./styles/App.css";
 
 import Tours from "./pages/Tours.tsx";
-import Profile from "./pages/Profile";
-import Login from "./pages/Login";
-import Cart from "./pages/Cart";
-import PageNotFound from "./pages/PageNotFound";
-import AppLayout from "./ui/AppLayout";
-import GlobalStyles from "./styles/GlobalStyles";
+import Profile from "./pages/Profile.jsx";
+import Login from "./pages/Login.tsx";
+import Signup from "./pages/Signup.tsx";
+import Cart from "./pages/Cart.jsx";
+import PageNotFound from "./pages/PageNotFound.jsx";
+import AppLayout from "./ui/AppLayout.jsx";
+import GlobalStyles from "./styles/GlobalStyles.js";
 import TourDetails from "./features/TourDetails/TourDetails.tsx";
 import Hotel from "./features/TourDetails/Hotel/Hotel.tsx";
 import GeneralInfo from "./features/TourDetails/GeneralInfo/GeneralInfo.tsx";
+import ProtectedRoute from "./ui/ProtectedRoute.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,15 +53,27 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <Profile />,
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "login",
         element: <Login />,
       },
       {
+        path: "signup",
+        element: <Signup />,
+      },
+      {
         path: "cart",
-        element: <Cart />,
+        element: (
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

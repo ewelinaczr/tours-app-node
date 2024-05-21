@@ -73,15 +73,14 @@ select {
   color: inherit;
   height: 3.6rem;
   color: var(--color-grey-3);
-  border-color: transparent;
+  border: 1px solid var(--color-grey-0);
   font-weight: 500;
-  border-width: 2px;
   border-radius: 4px;
-  border-style: solid;
   background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 1rem;
 }
 
 input.checked {

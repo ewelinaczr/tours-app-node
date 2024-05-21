@@ -11,14 +11,6 @@ export async function getTours() {
 }
 
 export async function getFilteredTours(searchParams) {
-  // const queryParams: string[] = [];
-  // console.log(sort, "AAA");
-  // filter && queryParams.push(`destination=${filter}`);
-  // sort && queryParams.push(`sort=${sort}`);
-  // limitFields && queryParams.push(`fields=${limitFields}`);
-  // paginate && queryParams.push(`parinate=${paginate}`);
-  // const queryString = queryParams.join("&");
-  // console.log("queryString", queryString);
   try {
     const response = await fetch(`api/v1/tours?${searchParams}`);
     const data = await response.json();
