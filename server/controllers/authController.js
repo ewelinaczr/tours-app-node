@@ -14,11 +14,13 @@ const signToken = (id) => {
 
 const createAndSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
+
+  const expires = new Date(
+    Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000
+  );
+
   const cookieOptions = {
-    expires: new Date(
-      Date.now() +
-        Number(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000
-    ),
+    expires,
     httpOnly: true,
   };
 
@@ -27,7 +29,9 @@ const createAndSendToken = (user, statusCode, res) => {
   }
 
   res.cookie('jwt', token, cookieOptions);
+
   user.password = undefined;
+
   res.status(statusCode).json({
     status: 'success',
     token,
@@ -65,15 +69,23 @@ exports.login = catchAsync(async (req, res, next) => {
   createAndSendToken(user, 200, res);
 });
 
+exports.logout = (req, res, next) => {
+  res.cookie('jwt', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: 'success' });
+  next();
+};
+
 exports.protect = catchAsync(async (req, res, next) => {
   // Check if token exists
   let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1];
+  console.log(req.headers);
+  if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
+    token = req.headers.cookie.split('=')[1];
   }
+
   if (!token) {
     return next(
       new AppError('You are not logged in, log in to get access', 401)

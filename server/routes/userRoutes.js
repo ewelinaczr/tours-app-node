@@ -11,12 +11,13 @@ router.route('/forgotPassword').post(authController.forgotPassword);
 router.route('/resetPassword/:token').patch(authController.resetPassword);
 
 router.use(authController.protect);
-router.use(authController.restricTo('admin'));
-router.route('/').get(usersController.getAllUsers);
 router.route('/me').get(usersController.getMe, usersController.getUser);
+router.route('/logout').post(authController.logout);
 router.route('/updateMyPassword').patch(authController.updatePassword);
 router.route('/updateMy').patch(usersController.updateMe);
 router.route('/deleteMe').delete(usersController.deleteMe);
+router.use(authController.restricTo('admin'));
+router.route('/').get(usersController.getAllUsers);
 
 router
   .route('/:id')

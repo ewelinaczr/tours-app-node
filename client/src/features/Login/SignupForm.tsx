@@ -23,7 +23,7 @@ function FormInput({ label, children }) {
   );
 }
 
-function LoginForm() {
+function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, isPending, error } = useLogin();
@@ -37,7 +37,7 @@ function LoginForm() {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Greeting>Welcome back!</Greeting>
+        <Greeting>Let's get started!</Greeting>
         <FormInput label="Email">
           <input
             type="email"
@@ -52,7 +52,14 @@ function LoginForm() {
           <input
             type="password"
             id="password"
-            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </FormInput>
+        <FormInput label="Confirm Password">
+          <input
+            type="password"
+            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -66,20 +73,18 @@ function LoginForm() {
           )}
         </Message>
         <FullButton
-          label={"Log in"}
+          label={"Sign up"}
           type={"submit"}
           style={ButtonType.PRIMARY}
         ></FullButton>
-        <ForgotPassword to={"/users/forgotPassword"}>
-          Forgot password?
-        </ForgotPassword>
+        <ForgotPassword to={"/users/forgotPassword"}></ForgotPassword>
         <p>
-          Don't have an account?
-          <SignUp to={"/signup"}>SIGN UP</SignUp>
+          Already have an account?
+          <SignUp to={"/signup"}>LOG IN</SignUp>
         </p>
       </Form>
     </>
   );
 }
 
-export default LoginForm;
+export default SignupForm;

@@ -1,16 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login as loginApi } from "../../services/apiAuth.ts";
-
-const mutationKey = ["user-login"];
 
 export function useLogin() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const [error, setError] = useState<boolean | undefined>(undefined);
 
   const { mutate: login, isPending } = useMutation({
-    mutationKey,
     mutationFn: ({ email, password }: { email: string; password: string }) => {
       return loginApi({
         email,
@@ -19,8 +18,9 @@ export function useLogin() {
     },
     onSuccess: (data) => {
       if (data) {
+        queryClient.setQueryData(["user"], data.user);
         setError(false);
-        return navigate("/tours");
+        return navigate("/tours", { replace: true });
       }
       setError(true);
     },

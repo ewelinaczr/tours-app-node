@@ -26,18 +26,23 @@ function FullButton({
   type,
   style,
   onReset,
+  onSubmit,
+  disabled,
 }: {
   label: string;
   iconSrc?: string;
   type: "submit" | "reset" | "button";
   style: ButtonType;
   onReset?: () => void | undefined;
+  onSubmit?: () => void | undefined;
+  disabled: boolean;
 }) {
   return (
     <StyledButton
       $style={style}
       type={type}
-      onClick={type === "reset" ? onReset : undefined}
+      disabled={disabled}
+      onClick={type === "reset" ? onReset : onSubmit}
     >
       {label}
       {iconSrc ? <Icon src={`/${iconSrc}`} alt="Complete button icon" /> : null}
