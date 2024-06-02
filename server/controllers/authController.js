@@ -81,7 +81,6 @@ exports.logout = (req, res, next) => {
 exports.protect = catchAsync(async (req, res, next) => {
   // Check if token exists
   let token;
-  console.log(req.headers);
   if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
     token = req.headers.cookie.split('=')[1];
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useUser from "../features/Login/useUser.tsx";
+import useUser from "../features/Login/loginHooks/useUser.tsx";
 import Spinner from "../ui/Spinner.tsx";
 
 function ProtectedRoute({ children }) {

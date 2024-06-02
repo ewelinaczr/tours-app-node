@@ -1,31 +1,20 @@
 import React from "react";
 import { useState } from "react";
 import { ButtonType } from "../../ui/Buttons/FullButton.tsx";
+import { ErrorMessage, FormInput } from "../../ui/Inputs/FormInput.tsx";
 import {
-  StyledInput,
   Form,
   Greeting,
   Message,
-  Icon,
   ForgotPassword,
   SignUp,
 } from "./LoginStyles.tsx";
-
 import FullButton from "../../ui/Buttons/FullButton.tsx";
-import useLogin from "./useLogin.tsx";
-
-function FormInput({ label, children }) {
-  return (
-    <StyledInput>
-      <label htmlFor={children.props.id}>{label}</label>
-      {children}
-    </StyledInput>
-  );
-}
+import useLogin from "./loginHooks/useLogin.tsx";
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("hollygibney@test.com");
+  const [password, setPassword] = useState("hollygibneytest");
   const { login, isPending, error } = useLogin();
 
   async function handleSubmit(event) {
@@ -55,19 +44,14 @@ function LoginForm() {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={isPending}
           />
         </FormInput>
-        <Message>
-          {error && (
-            <>
-              <Icon src="/error.svg" alt="input error" />
-              Incorrect email or password
-            </>
-          )}
-        </Message>
+        <Message>{error && <ErrorMessage error={error} />}</Message>
         <FullButton
           label={"Log in"}
           type={"submit"}
+          disabled={isPending}
           style={ButtonType.PRIMARY}
         ></FullButton>
         <ForgotPassword to={"/users/forgotPassword"}>

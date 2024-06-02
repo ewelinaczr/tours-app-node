@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {
+  getButtonInvisible,
   getButtonPrimary,
   getButtonSecondary,
 } from "../../styles/getButtonStyle.ts";
@@ -8,12 +9,14 @@ import {
 export enum ButtonType {
   PRIMARY = "primary",
   SECONDARY = "secondary",
+  INVISIBLE = " invisible",
 }
 
 const StyledButton = styled.button<{ $style: string }>`
   width: fit-content;
   ${(props) => props.$style === ButtonType.PRIMARY && getButtonPrimary()}
   ${(props) => props.$style === ButtonType.SECONDARY && getButtonSecondary()}
+  ${(props) => props.$style === ButtonType.INVISIBLE && getButtonInvisible()}
 `;
 
 const Icon = styled.img`

@@ -1,60 +1,51 @@
 import React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ButtonType } from "../../ui/Buttons/FullButton.tsx";
-import { ErrorMessage, FormInput } from "../../ui/Inputs/FormInput.tsx";
+import { Form, Message, FormTitleContainer } from "./LoginStyles.tsx";
 import {
-  Form,
-  Greeting,
-  Message,
-  ForgotPassword,
-  SignUp,
-} from "./LoginStyles.tsx";
+  ErrorMessage,
+  FormInput,
+  SuccessMessage,
+} from "../../ui/Inputs/FormInput.tsx";
 import FullButton from "../../ui/Buttons/FullButton.tsx";
-import useSignUp from "./loginHooks/useSignUp.tsx";
+import useUpdatePassword from "./loginHooks/useUpdatePassword.tsx";
+import useUser from "./loginHooks/useUser.tsx";
 
-function SignupForm() {
+function UpdatePasswordForm() {
   const { register, formState, getValues, handleSubmit } = useForm();
   const { errors } = formState;
-  const { signUp, isPending, error } = useSignUp();
+  const { updatePassword, isPending, error } = useUpdatePassword();
+  const [success, setSuccess] = useState<boolean | undefined>(undefined);
+  const { user } = useUser();
 
   function onSubmit(data) {
-    signUp(data);
+    updatePassword(data);
+    setSuccess(!error);
+    setTimeout(() => setSuccess(undefined), 2000);
   }
 
   return (
-    <>
+    <FormTitleContainer>
+      <h5>{user.name}, update your password</h5>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Greeting>Let's get started!</Greeting>
         <FormInput
-          label="Full name"
-          error={errors.name && String(errors.name.message)}
+          label="Current password"
+          error={
+            errors.passwordCurrent && String(errors.passwordCurrent.message)
+          }
         >
           <input
-            type="text"
-            id="name"
+            type="password"
+            id="passwordCurrent"
             disabled={isPending}
-            {...register("name", { required: "This filed is required" })}
-          />
-        </FormInput>
-        <FormInput
-          label="Email"
-          error={errors.email && String(errors.email.message)}
-        >
-          <input
-            type="email"
-            id="email"
-            disabled={isPending}
-            {...register("email", {
+            {...register("passwordCurrent", {
               required: "This filed is required",
-              pattern: {
-                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-                message: "Please provide a valid email adress",
-              },
             })}
           />
         </FormInput>
         <FormInput
-          label="Password (min 8 characters)"
+          label="New password (min 8 characters)"
           error={errors.password && String(errors.password.message)}
         >
           <input
@@ -63,6 +54,10 @@ function SignupForm() {
             disabled={isPending}
             {...register("password", {
               required: "This filed is required",
+              pattern: {
+                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                message: "Please provide a valid email adress",
+              },
               minLength: {
                 value: 8,
                 message: "Password must have at least 8 characters",
@@ -87,21 +82,19 @@ function SignupForm() {
             })}
           />
         </FormInput>
-        <Message>{error && <ErrorMessage error={error} />}</Message>
+        <Message>
+          {error && <ErrorMessage error={error} />}
+          {success && <SuccessMessage success={success} />}
+        </Message>
         <FullButton
-          label={"Sign up"}
+          label={"Update password"}
           type={"submit"}
           style={ButtonType.PRIMARY}
           disabled={isPending}
         ></FullButton>
-        <ForgotPassword to={"/users/forgotPassword"}></ForgotPassword>
-        <p>
-          Already have an account?
-          <SignUp to={"/login"}>LOG IN</SignUp>
-        </p>
       </Form>
-    </>
+    </FormTitleContainer>
   );
 }
 
-export default SignupForm;
+export default UpdatePasswordForm;

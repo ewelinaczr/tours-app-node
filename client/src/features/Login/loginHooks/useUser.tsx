@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMyProfile } from "../../services/apiUsers.ts";
+import { getMyProfile } from "../../../services/apiUsers.ts";
 
 const queryKey = ["user"];
 

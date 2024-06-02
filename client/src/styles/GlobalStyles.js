@@ -58,7 +58,6 @@ html {
 body {
   font-family: "Inter", sans-serif;
   color: var(--color-grey-5);
-
   transition: color 0.3s, background-color 0.3s;
   min-height: 100vh;
   line-height: 1.5;
@@ -108,7 +107,7 @@ button {
 
 select:disabled,
 input:disabled {
-  background-color: var(--color-grey-2);
+  background-color: var(--color-grey-0);
   color: var(--color-grey-2);
 }
 

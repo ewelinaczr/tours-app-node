@@ -39,5 +39,14 @@ export function getButtonSecondary() {
   return css`
     border: 2px solid var(--color-brand-purple);
     color: var(--color-brand-purple);
+    padding: 0 2rem;
+  `;
+}
+
+export function getButtonInvisible() {
+  return css`
+    border: none;
+    color: var(--color-brand-purple);
+    padding: 0 2rem;
   `;
 }

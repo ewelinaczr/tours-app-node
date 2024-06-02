@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export const Avatar = styled.img`
+  height: 8rem;
+  width: 8rem;
+  background-color: var(--color-grey-0);
+  border-radius: 4rem;
+  padding: 2rem;
+`;
+
 export const BackgroundPhoto = styled.img`
   width: 100%;
   background-size: contain;
@@ -23,24 +31,18 @@ export const LoginFormContainer = styled.div`
   right: 10%;
   transform: translateY(-50%);
 `;
+
+export const FormNavContainer = styled.div`
+  display: flex;
+  gap: 2rem;
+`;
+
 export const Form = styled.form`
   width: 25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-`;
-
-export const StyledInput = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-`;
-
-export const Icon = styled.img`
-  height: 1.4rem;
-  width: 1.4rem;
+  gap: 0.6rem;
 `;
 
 export const Message = styled.div`
@@ -67,4 +69,30 @@ export const SignUp = styled(Link)`
 export const ForgotPassword = styled(Link)`
   font-size: 1.4rem;
   color: var(--color-grey-2);
+`;
+
+export const ProfileActions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  width: fit-content;
+  white-space: nowrap;
+  border-right: 1px solid var(--color-grey-0);
+  margin-right: 3rem;
+  padding-right: 4rem;
+`;
+
+export const ProfileAction = styled.button`
+  padding: 0;
+  border: none;
+  color: var(--color-brand-purple);
+`;
+
+export const FormTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 45rem;
+  width: 35rem;
 `;
